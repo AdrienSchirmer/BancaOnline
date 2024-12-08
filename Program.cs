@@ -16,6 +16,7 @@ class Program
             {
                 case 1:
                     Console.WriteLine($"Has entrat l'opció {choice}");
+                    banquer.CrearClient();
                     break;
                 case 2:
                     Console.WriteLine($"Has entrat l'opció {choice}");

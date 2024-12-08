@@ -9,6 +9,16 @@ public class Banquer
         new Client("Pepa", 20000)
     };
 
+    public void CrearClient()
+    {
+        Console.Write("Introdueix el nom del nou client: ");
+        var nomclient = Console.ReadLine();
+        Console.WriteLine();
+        Console.Write("Salari (0,2,10..: ");
+        int salari = Convert.ToInt32(Console.ReadLine());
+        clients.Add(new Client(nomclient, salari));
+    }
+
     public void VeureClients()
     {
         foreach (var client in clients)
