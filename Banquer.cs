@@ -1,9 +1,9 @@
-﻿using System.IO.Pipes;
-
-namespace Schirmer_Adrien_Banca_online;
+﻿namespace Schirmer_Adrien_Banca_online;
 public class Banquer
 {
-    List<Client> clients = new List<Client>()
+    private string nomclient;
+    
+    List<Client> clients = new List<Client>
     {
         new Client("Pere", 2000),
         new Client("Pepa", 20000)
@@ -18,6 +18,7 @@ public class Banquer
     }
     public string SeleccionarClient()
     {
+        var i = 0;
         Console.Write("Nom del client: ");
         string nom = Console.ReadLine();
         foreach (var client in clients)
@@ -25,35 +26,35 @@ public class Banquer
             if (client.Nom == nom)
             {
                 Console.WriteLine($"Usuari seleccionat: {client.Nom} | Saldo: {client.Saldo}");
-                Console.WriteLine("1: Afegir Saldo | 2: Restar Saldo | 3: Sortir");
-                    
-                int choice = int.Parse(Console.ReadLine());
-                switch (choice)
-                {
-                    case 1:
-                        AfegirDiners();
-                        break;
-                    case 2:
-                        TreureDiners();
-                        break;
-                    case 3:
-                        break;
-                }
+                nomclient = nom;
+                i--;
+            }
+            else
+            {
+                i++;
+            }
+            
+            if (i == clients.Count)
+            {
+                nom = "false";
+                Console.WriteLine(i);
+                Console.WriteLine("false");
             }
         }
-
         return nom;
     }
 
     public void AfegirDiners()
     {
         Console.Write("Introdueix la quantitat de diners que vols afegir: ");
+        Console.WriteLine(nomclient);
         int quantitat = int.Parse(Console.ReadLine());
         foreach (var client in clients)
         {
-            if (client.Nom == SeleccionarClient())
+            if (client.Nom == nomclient)
             {
                 client.Saldo += quantitat;
+                Console.WriteLine($"Saldo agregat, saldo actual: {client.Saldo}");
             }
         }
     }
@@ -65,7 +66,7 @@ public class Banquer
         int comissio = quantitat / 100;
         foreach (var client in clients)
         {
-            if (client.Nom == SeleccionarClient())
+            if (client.Nom == nomclient)
             {
                 if (quantitat+comissio > client.Saldo)
                 {
@@ -74,6 +75,7 @@ public class Banquer
                 else
                 {
                     client.Saldo -= comissio+quantitat;
+                    Console.WriteLine($"Saldo restat, saldo actual: {client.Saldo}");
                 }
             }
         }
